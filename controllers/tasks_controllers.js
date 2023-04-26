@@ -18,8 +18,16 @@ const createNew = async (req, res) => {
   }
 };
 
-const getSingle = (req, res) => {
-  res.status(200).json({ success: true, data: req.params.id });
+const getSingle = async (req, res) => {
+  try {
+    const task = await TaskList.findOne({ _id: req.params.id });
+    if (!task) {
+      return res.status(404).json({ msg: "no task with this id" });
+    }
+    res.status(200).json({ success: true, data: task });
+  } catch (err) {
+    res.status(500).json({ msg: err });
+  }
 };
 
 const updateTask = (req, res) => {
@@ -28,10 +36,16 @@ const updateTask = (req, res) => {
     .json({ success: true, data: `THE TASK ${req.params.id} IS UPDATED` });
 };
 
-const deleteTask = (req, res) => {
-  res
-    .status(200)
-    .json({ success: true, data: `THE TASK ${req.params.id} IS DELETED` });
+const deleteTask = async (req, res) => {
+  try {
+    const task = await TaskList.findOneAndDelete({ _id: req.params.id });
+    if (!task) {
+      return res.status(404).json({ msg: "no task with this id" });
+    }
+    res.status(200).json({ success: true, task });
+  } catch (err) {
+    res.status(500).json({ msg: err });
+  }
 };
 
 module.exports = {
