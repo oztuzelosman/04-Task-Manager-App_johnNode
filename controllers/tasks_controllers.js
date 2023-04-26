@@ -1,12 +1,21 @@
 const TaskList = require("../models/TaskList");
 
-const getAll = (req, res) => {
-  res.status(200).json({ success: true, data: "THE TASK LIST" });
+const getAll = async (req, res) => {
+  try {
+    const tasks = await TaskList.find({});
+    res.status(200).json({ success: true, data: tasks });
+  } catch (err) {
+    res.status(500).json({ msg: err });
+  }
 };
 
 const createNew = async (req, res) => {
-  const task = await TaskList.create(req.body);
-  res.status(201).json({ success: true, data: { task } });
+  try {
+    const task = await TaskList.create(req.body);
+    res.status(201).json({ success: true, data: { task } });
+  } catch (err) {
+    res.status(500).json({ msg: err });
+  }
 };
 
 const getSingle = (req, res) => {
