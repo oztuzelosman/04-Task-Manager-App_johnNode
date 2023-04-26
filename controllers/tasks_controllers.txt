@@ -1,0 +1,53 @@
+/* 
+///////UPDATE
+The code is using the findOneAndUpdate method to update
+a task in a MongoDB database using Mongoose. 
+The findOneAndUpdate method takes three arguments:
+
+1-) A query object that specifies which document(s) to update. 
+In this case, the query is looking for a document with an _id field
+that matches the id parameter of the HTTP request.
+
+2-)An update object that specifies the changes to be made to the document(s). 
+In this case, the update object is the req.body object, 
+which contains the new data for the task.
+
+3-)An options object that specifies additional options for the update operation.
+ In this case, the new and runValidators options are set to true. 
+ The new option tells Mongoose to return the updated document 
+ instead of the original document, and the runValidators option tells Mongoose
+to run any validation rules defined in the task schema before
+updating the document.
+
+///////DELETE
+Inside the try block, the code is using the findOneAndDelete method to delete
+a task from a MongoDB database using Mongoose. The findOneAndDelete method takes
+a query object that specifies which document to delete. In this case, 
+the query is looking for a document with an _id field that 
+matches the id parameter of the HTTP request. 
+The deleted task is stored in a variable called task.
+
+///////GET ALL TASKS
+The code is using the find method to retrieve all tasks
+from a MongoDB database using Mongoose. The find method takes one argument, 
+which is an object that defines the query criteria. 
+In this case, an empty object is used as the query criteria, 
+which means that all tasks will be retrieved.
+
+///////CREATE NEW TASK
+This block of code is wrapped in a try-catch block, 
+which is used to catch any errors that may occur during execution. 
+Inside the try block, the code is using the create method
+ to create a new task in a MongoDB database using Mongoose. 
+ The create method takes one argument, which is an object 
+ that represents the new task to be created. 
+ In this case, the object is taken from the request body using req.body.
+ 
+ ///////GET SINGLE TASK
+The findOne method takes one argument, which is an object that represents
+the search criteria. In this case, the search criteria is an object 
+with an _id property that is equal to the id parameter in the request URL.
+
+The retrieved task is stored in a variable called task.
+ 
+*/

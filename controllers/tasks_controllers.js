@@ -30,12 +30,6 @@ const getSingle = async (req, res) => {
   }
 };
 
-const updateTask = (req, res) => {
-  res
-    .status(200)
-    .json({ success: true, data: `THE TASK ${req.params.id} IS UPDATED` });
-};
-
 const deleteTask = async (req, res) => {
   try {
     const task = await TaskList.findOneAndDelete({ _id: req.params.id });
@@ -43,6 +37,25 @@ const deleteTask = async (req, res) => {
       return res.status(404).json({ msg: "no task with this id" });
     }
     res.status(200).json({ success: true, task });
+  } catch (err) {
+    res.status(500).json({ msg: err });
+  }
+};
+
+const updateTask = async (req, res) => {
+  try {
+    const task = await TaskList.findOneAndUpdate(
+      { _id: req.params.id },
+      req.body,
+      {
+        new: true,
+        runValidators: true,
+      }
+    );
+    if (!task) {
+      return res.status(404).json({ msg: "no task with this id" });
+    }
+    res.status(200).json({ success: true, data: task });
   } catch (err) {
     res.status(500).json({ msg: err });
   }
